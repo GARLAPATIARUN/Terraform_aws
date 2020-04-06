@@ -1,0 +1,16 @@
+Provider “aws”{
+	Region = “us-west-2”
+	Access-key = “”
+	Secret-key = “”
+resource “aws_instance” “my_ec2”{
+	ami = “ami-02fd0b06f06d93dfc”
+	instance_type = “t2.micro”
+	vpc_security_group_ids = [“${aws_security_group.arun.id”}]
+	tags {
+		Name = "test"
+}	
+}
+resource “aws_ami_from_instance” “my_ec2” {	
+	name = “my_ec2”
+	source_instance_id = “${aws_instance.arun.id}”
+}
